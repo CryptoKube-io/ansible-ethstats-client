@@ -1,0 +1,29 @@
+---
+- name: Clone eth-net-intelligence-api repo
+  git:
+    repo: https://github.com/cubedro/eth-net-intelligence-api
+    dest: "{{ethstats_client_dir}}"
+    force: true
+
+- name: Install eth-net-intelligence-api
+  command: /usr/bin/sudo /usr/bin/npm install --production
+  args:
+    chdir: "{{ethstats_client_dir}}"
+
+- name: Configure eth-net-intelligence-api
+  template:
+    src: app.json.j2
+    dest: "{{ethstats_client_dir}}/app.json"
+
+- name: Install systemd script
+  template:
+    src: ethstats-client.service.j2
+    dest: /etc/systemd/system/ethstats-client.service
+  notify: Restart EthStats client service
+
+- name: Enable and start EthStats client service
+  systemd:
+    name: ethstats-client.service
+    state: started
+    enabled: yes
+    daemon_reload: yes

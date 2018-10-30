@@ -1,0 +1,16 @@
+---
+- name: Start EthStats client service
+  systemd:
+    name: ethstats-client.service
+    state: started
+
+- name: Stop EthStats client service
+  systemd:
+    name: ethstats-client.service
+    state: stopped
+
+- name: Restart EthStats client service
+  systemd:
+    name: ethstats-client.service
+    state: restarted
+

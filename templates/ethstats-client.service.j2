@@ -1,0 +1,12 @@
+[Unit]
+Description=EthStats Client
+After=parity.service
+
+[Service]
+WorkingDirectory={{ethstats_client_dir}}
+Environment=WS_SECRET={{ws_secret}}
+Environment=WS_SERVER={{ws_server}}
+ExecStart=/usr/bin/npm start
+KillMode=process
+Restart=on-failure
+Type=simple
