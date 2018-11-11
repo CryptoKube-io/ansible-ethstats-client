@@ -18,12 +18,23 @@
 - name: Install systemd script
   template:
     src: ethstats-client.service.j2
-    dest: /etc/systemd/system/ethstats-client.service
+    dest: "{{ethstats_service_dir}}/{{ethstats_service_name}}"
   notify: Restart EthStats client service
 
 - name: Enable and start EthStats client service
   systemd:
-    name: ethstats-client.service
+    name: "{{ethstats_service_name}}"
     state: started
     enabled: yes
     daemon_reload: yes
+
+- name: Create {{parity_service_name}}.wants dir
+  file:
+    path: "{{ethstats_service_dir}}/{{parity_service_name}}.wants"
+    state: directory
+
+- name: Create systemd symlink from Parity to EthStats
+  file:
+    src: "{{ethstats_service_dir}}/{{ethstats_service_name}}"
+    dest: "{{ethstats_service_dir}}/{{parity_service_name}}.wants/{{ethstats_service_name}}"
+    state: link

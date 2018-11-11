@@ -3,3 +3,6 @@ ethstats_client_dir: /opt/eth-net-intelligence-api
 ws_server: ws://{{groups['app_node'][0]}}:3000
 ws_secret: insecure
 ethstats_instance_name: "{{ansible_hostname}}"
+ethstats_service_dir: /etc/systemd/system
+ethstats_service_name: ethstats-client.service
+parity_service_name: parity.service
