@@ -4,8 +4,8 @@ After=parity.service
 
 [Service]
 WorkingDirectory={{ethstats_client_dir}}
-Environment=WS_SECRET={{ws_secret}}
-Environment=WS_SERVER={{ws_server}}
+Environment="WS_SECRET={{ws_secret}}" "WS_SERVER={{ws_server}}"
+Environment="RPC_HOST={{ethstats_web3_host}}" "RPC_PORT={{ethstats_web3_port}}"
 ExecStart=/usr/bin/npm start
 KillMode=process
 Restart=on-failure
